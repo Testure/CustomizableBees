@@ -1,0 +1,16 @@
+[
+{
+  "modid": "customizablebees",
+  "name": "Customizable Bees",
+  "description": "Mod that allows other mods, CraftTweaker scripts, and GroovyScript scripts to easily add custom bees to forestry.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Turing64"],
+  "credits": "brachy84 for being cool",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
