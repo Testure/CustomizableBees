@@ -4,6 +4,8 @@ By default, bee combs are obtained as a bee product then processed in the Centri
 
 Customizable Bees offers an easy way to add bee comb types to the game.
 
+_**Combs should be created during GroovyScript's preInit loader.**_
+
 ## The Comb Item
 Before you can add comb types, you need to register a base item for them first.
 
@@ -42,6 +44,8 @@ it also returns the very `CombItem` it was given.
 ```groovy
 mods.customizablebees.addComb(CombItem)
 ```
+
+Please keep in mind that you should only register one comb item at once.
 
 ## Comb Types
 Comb types define a specific variant of bee comb. They are created through a simple builder.
@@ -89,7 +93,15 @@ Remember that you can chain the methods of a builder!
 
 ## Comb Recipes
 You can define the byproducts of a particular bee comb type by creating a comb recipe.
-This can be done before OR after a comb has been registered.
+
+In order to properly register your comb recipe, you must connect to the `com.turing.customizablebees.BeeCombEvent.DefineRecipes` event.
+To do this you can simply do the following:
+```groovy
+import com.turing.customizablebees.BeeCombEvent
+event_handler.listen({BeeCombEvent.DefineRecipes event ->
+    
+})
+```
 
 Comb recipes are Centrifuge recipes that take the parenting type of bee comb and produce various item byproducts.
 Comb recipes are also created using a builder, Which can be obtained using:
@@ -121,8 +133,11 @@ CombRecipeBuilder.build(CombItem)
 The following is an example of adding custom comb types into the game.
 
 ```groovy
+import com.turing.customizablebees.BeeCombEvent
+import java.awt.Color
+
 def type1 = mods.customizablebees.combTypeBuilder("amogus").setPrimaryColor(0xFFFFFF).setSecondaryColor(200, 200, 0).build()
-def type2 = mods.customizablebees.combTypeBuilder("epic").setPrimaryColor(new java.awt.Color(200, 200, 0)).setSecondaryColor(120, 0, 80).build()
+def type2 = mods.customizablebees.combTypeBuilder("epic").setPrimaryColor(new Color(200, 200, 0)).setSecondaryColor(120, 0, 80).build()
 
 def myComb = mods.customizablebees.createCombItem(null)
 
@@ -131,8 +146,10 @@ myComb.addType(type2)
 
 mods.customizablebees.addComb(myComb)
 
-mods.customizablebees.combRecipeBuilder(type2)
-.addProduct(item('minecraft:apple') * 2)
-.addProduct(item('minecraft:iron_ingot') * 1, 0.2F)
-.build(myComb)
+event_handler.listen({BeeCombEvent.DefineRecipes event ->
+    mods.customizablebees.combRecipeBuilder(type2)
+    .addProduct(item('minecraft:apple') * 2)
+    .addProduct(item('minecraft:iron_ingot') * 1, 0.2F)
+    .build(myComb)
+})
 ```

@@ -5,10 +5,12 @@ The examples in this documentation use `customizablebees` as a modid. This can b
 `custombees`, `forestry`, and `forestrytweaker`. This does not apply when importing java classes.
 
 ## Basic API
-Package:
+The basic API can be accessed with:
 ```groovy
 mods.customizablebees
 ```
+
+**_The Customizable Bees API is designed to run on GroovyScript's preInit loader._**
 
 ### SpeciesEntry
 A SpeciesEntry is a custom interface that defines specific species of bee.

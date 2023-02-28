@@ -7,13 +7,16 @@ import com.turing.customizablebees.items.CombItem;
 import com.turing.customizablebees.network.Messages;
 import com.turing.customizablebees.proxy.Proxy;
 import forestry.api.recipes.RecipeManagers;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLConstructionEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.LogManager;
@@ -50,17 +53,19 @@ public class CustomizableBees {
         MinecraftForge.EVENT_BUS.post(new BeeDefinitionEvent.Post());
     }
 
-    @Mod.EventHandler
-    public void init(FMLInitializationEvent event) {
-        CombItem.ALL_COMB_TYPES.forEach((comb, types) -> types.forEach(type -> OreDictionary.registerOre("beeCombs", comb.getStackFromType(type))));
-
+    @SubscribeEvent
+    public void recipes(RegistryEvent.Register<IRecipe> event) {
         MinecraftForge.EVENT_BUS.post(new BeeCombEvent.DefineRecipes());
         MinecraftForge.EVENT_BUS.post(new BeeCombEvent.RegisterRecipes());
         APIHelper.COMBS.forEach(comb -> {
             comb.recipes.forEach((type, products) -> RecipeManagers.centrifugeManager.addRecipe(20, comb.getStackFromType(type), products));
             comb.recipes.clear();
         });
+    }
 
+    @Mod.EventHandler
+    public void init(FMLInitializationEvent event) {
+        CombItem.ALL_COMB_TYPES.forEach((comb, types) -> types.forEach(type -> OreDictionary.registerOre("beeCombs", comb.getStackFromType(type))));
         if (Loader.isModLoaded("groovyscript")) GroovyscriptHelper.init();
         CustomBees.init();
         proxy.init();
