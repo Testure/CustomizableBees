@@ -65,7 +65,7 @@ public class CustomizableBees {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        CombItem.ALL_COMB_TYPES.forEach((comb, types) -> types.forEach(type -> OreDictionary.registerOre("beeCombs", comb.getStackFromType(type))));
+        CombItem.ALL_COMB_TYPES.forEach((comb, types) -> types.forEach(type -> OreDictionary.registerOre("beeComb", comb.getStackFromType(type))));
         if (Loader.isModLoaded("groovyscript")) GroovyscriptHelper.init();
         CustomBees.init();
         proxy.init();

@@ -1,6 +1,5 @@
 package com.turing.customizablebees.api.groovyscript;
 
-import com.cleanroommc.groovyscript.GroovyScript;
 import com.cleanroommc.groovyscript.api.GroovyLog;
 import com.cleanroommc.groovyscript.compat.mods.ModPropertyContainer;
 import com.cleanroommc.groovyscript.helper.ingredient.IngredientHelper;
@@ -16,6 +15,27 @@ import javax.annotation.Nullable;
 import java.util.function.Function;
 
 public class CustomizableBees extends ModPropertyContainer {
+    public final Centrifuge centrifuge = new Centrifuge();
+    public final Squeezer squeezer = new Squeezer();
+    public final Carpenter carpenter = new Carpenter();
+    public final Still still = new Still();
+    public final Moistener moistener = new Moistener();
+    public final CharcoalPile charcoalPile = new CharcoalPile();
+    public final Fermenter fermenter = new Fermenter();
+    public final ThermionicFabricator thermionicFabricator = new ThermionicFabricator();
+
+    public CustomizableBees() {
+        addRegistry(centrifuge);
+        addRegistry(squeezer);
+        addRegistry(carpenter);
+        addRegistry(still);
+        addRegistry(moistener);
+        addRegistry(charcoalPile);
+        addRegistry(fermenter);
+        addRegistry(thermionicFabricator);
+        addRegistry(thermionicFabricator.smelting);
+    }
+
     public void createBeeMutation(String a, String b, String result, double chance) {
         createBeeMutation(getBeeSpecies(a), getBeeSpecies(b), getBeeSpecies(result), chance);
     }
