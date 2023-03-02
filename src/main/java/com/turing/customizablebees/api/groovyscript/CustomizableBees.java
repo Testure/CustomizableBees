@@ -34,6 +34,7 @@ public class CustomizableBees extends ModPropertyContainer {
         addRegistry(fermenter);
         addRegistry(thermionicFabricator);
         addRegistry(thermionicFabricator.smelting);
+        addRegistry(moistener.fuel);
     }
 
     public void createBeeMutation(String a, String b, String result, double chance) {

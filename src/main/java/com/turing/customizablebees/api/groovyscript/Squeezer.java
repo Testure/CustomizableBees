@@ -143,10 +143,10 @@ public class Squeezer extends VirtualizedRegistry<ISqueezerRecipe> {
         private float chance;
         private ItemStack remnant = ItemStack.EMPTY;
 
-        public RecipeBuilder input(ItemStack stack) {
-            if (stack == null) return this;
+        public RecipeBuilder input(IIngredient stack) {
+            if (stack == null || stack.getMatchingStacks().length < 1) return this;
             addInputList();
-            this.inputs.add(stack);
+            this.inputs.add(stack.getMatchingStacks()[0]);
             return this;
         }
 

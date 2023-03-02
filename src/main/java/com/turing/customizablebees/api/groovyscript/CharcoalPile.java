@@ -101,7 +101,7 @@ public class CharcoalPile extends VirtualizedRegistry<ICharcoalPileWall> {
         return removeWall(((ItemBlock) stack.getItem()).getBlock());
     }
 
-    public void removeAll() {
+    public void removeAllWalls() {
         manager = TreeManager.charcoalManager;
         if (manager == null) return;
         manager.getWalls().forEach(this::addBackup);

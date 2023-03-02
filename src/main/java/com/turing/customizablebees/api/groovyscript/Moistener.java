@@ -6,6 +6,8 @@ import com.cleanroommc.groovyscript.api.IIngredient;
 import com.cleanroommc.groovyscript.helper.SimpleObjectStream;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
+import forestry.api.fuels.FuelManager;
+import forestry.api.fuels.MoistenerFuel;
 import forestry.api.recipes.IMoistenerRecipe;
 import forestry.api.recipes.RecipeManagers;
 import forestry.factory.recipes.MoistenerRecipe;
@@ -16,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class Moistener extends VirtualizedRegistry<IMoistenerRecipe> {
+    public final Fuel fuel = new Fuel();
+
     public Moistener() {
         super();
     }
@@ -130,6 +134,60 @@ public class Moistener extends VirtualizedRegistry<IMoistenerRecipe> {
             MoistenerRecipe recipe = new MoistenerRecipe(this.input.get(0).getMatchingStacks()[0], this.output.get(0), time);
             add(recipe);
             return recipe;
+        }
+    }
+
+    public static class Fuel extends VirtualizedRegistry<MoistenerFuel> {
+        public Fuel() {
+            super();
+        }
+
+        @Override
+        public void onReload() {
+            removeScripted().forEach(fuel -> FuelManager.moistenerResource.remove(fuel.getItem(), fuel));
+            restoreFromBackup().forEach(fuel -> FuelManager.moistenerResource.put(fuel.getItem(), fuel));
+        }
+
+        public MoistenerFuel addFuel(IIngredient input, ItemStack output, int value, int stage) {
+            MoistenerFuel fuel = new MoistenerFuel(input.getMatchingStacks()[0], output, stage, value);
+            add(fuel);
+            return fuel;
+        }
+
+        public void add(MoistenerFuel fuel) {
+            if (fuel == null) return;
+            addScripted(fuel);
+            FuelManager.moistenerResource.put(fuel.getItem(), fuel);
+        }
+
+        public boolean remove(MoistenerFuel fuel) {
+            if (fuel == null || !FuelManager.moistenerResource.containsValue(fuel)) return false;
+            addBackup(fuel);
+            FuelManager.moistenerResource.remove(fuel.getItem(), fuel);
+            return true;
+        }
+
+        public boolean removeFuel(IIngredient input) {
+            if (FuelManager.moistenerResource.values().removeIf(fuel -> {
+                boolean found = input.test(fuel.getItem());
+                if (found) addBackup(fuel);
+                return found;
+            })) return true;
+
+            GroovyLog.msg("Error removing Forestry Moistener fuel")
+                    .add("Could not find recipe with input %s", input)
+                    .error()
+                    .post();
+            return false;
+        }
+
+        public void removeAll() {
+            FuelManager.moistenerResource.values().forEach(this::addBackup);
+            FuelManager.moistenerResource.clear();
+        }
+
+        public SimpleObjectStream<MoistenerFuel> streamFuels() {
+            return new SimpleObjectStream<>(FuelManager.moistenerResource.values()).setRemover(this::remove);
         }
     }
 }
