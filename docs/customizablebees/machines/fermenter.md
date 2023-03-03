@@ -22,9 +22,7 @@ Set the fluid ratio: (the amount of fluid output is (input amount * modifier))
 ```
 Set the catalyst item: (you must have a catalyst item set)
 ```groovy
-.setCatalyst(ItemStack)
-// OR
-.setCatalyst(String) // must be the name of an Ore Dictionary entry
+.setCatalyst(IIngredient)
 ```
 Register recipe: (returns a `IFermenterRecipe`)
 ```groovy
@@ -35,7 +33,7 @@ Register recipe: (returns a `IFermenterRecipe`)
 mods.forestry.Fermenter.recipeBuilder()
     .fluidInput(fluid('lava'))
     .fluidOutput(fluid('for.honey'))
-    .setCatalyst('beeComb') // any "beeComb" item
+    .setCatalyst(ore('beeComb')) // any "beeComb" item
     .setAmount(150) // use 150 lava
     .setModifier(3.0F) // create 450 honey (150 * 3.0 = 450)
     .register()

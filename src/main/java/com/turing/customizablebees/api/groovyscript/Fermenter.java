@@ -4,6 +4,7 @@ import com.cleanroommc.groovyscript.api.GroovyBlacklist;
 import com.cleanroommc.groovyscript.api.GroovyLog;
 import com.cleanroommc.groovyscript.api.IIngredient;
 import com.cleanroommc.groovyscript.helper.SimpleObjectStream;
+import com.cleanroommc.groovyscript.helper.ingredient.OreDictIngredient;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import forestry.api.recipes.IFermenterRecipe;
@@ -109,8 +110,7 @@ public class Fermenter extends VirtualizedRegistry<IFermenterRecipe> {
     public class RecipeBuilder extends AbstractRecipeBuilder<IFermenterRecipe> {
         private int amount = 100;
         private float modifier = 1.0F;
-        private ItemStack catalyst;
-        private String catalystOre;
+        private IIngredient catalyst;
 
         public RecipeBuilder setModifier(float modifier) {
             this.modifier = Math.max(modifier, 0.01F);
@@ -122,13 +122,8 @@ public class Fermenter extends VirtualizedRegistry<IFermenterRecipe> {
             return this;
         }
 
-        public RecipeBuilder setCatalyst(ItemStack stack) {
-            this.catalyst = stack;
-            return this;
-        }
-
-        public RecipeBuilder setCatalyst(String ore) {
-            this.catalystOre = ore;
+        public RecipeBuilder setCatalyst(IIngredient input) {
+            this.catalyst = input;
             return this;
         }
 
@@ -141,15 +136,15 @@ public class Fermenter extends VirtualizedRegistry<IFermenterRecipe> {
         public void validate(GroovyLog.Msg msg) {
             validateItems(msg, 0, 0, 0, 0);
             validateFluids(msg, 1, 1, 1, 1);
-            msg.add((catalyst == null || catalyst.isEmpty()) && (catalystOre == null || catalystOre.isEmpty()),"Expected either ore dictionary string or ItemStack for catalyst but found none!");
+            msg.add(catalyst == null,"Expected Ingredient for catalyst but found none!");
         }
 
         @Override
         public @Nullable IFermenterRecipe register() {
             if (!validate()) return null;
             FermenterRecipe recipe;
-            if (catalyst == null || catalyst.isEmpty()) recipe = new FermenterRecipe(catalystOre, amount, modifier, fluidOutput.get(0).getFluid(), fluidInput.get(0));
-            else recipe = new FermenterRecipe(catalyst, amount, modifier, fluidOutput.get(0).getFluid(), fluidInput.get(0));
+            if (catalyst instanceof OreDictIngredient) recipe = new FermenterRecipe(((OreDictIngredient) catalyst).getOreDict(), amount, modifier, fluidOutput.get(0).getFluid(), fluidInput.get(0));
+            else recipe = new FermenterRecipe(catalyst.getMatchingStacks()[0], amount, modifier, fluidOutput.get(0).getFluid(), fluidInput.get(0));
             add(recipe);
             return recipe;
         }

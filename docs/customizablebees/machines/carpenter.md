@@ -8,13 +8,9 @@ Set the recipe patter: (requires 1-3 strings each with a length of 1-3 character
 ```groovy
 .setRecipePattern(String...)
 ```
-Assign an ItemStack to a pattern character:
+Assign an Ingredient to a pattern character:
 ```groovy
-.assignInput(String character, ItemStack item)
-```
-Assign an Ore Dictionary to a pattern character:
-```groovy
-.assignOreDictionaryInput(String chararacter, String name) // must be the name of an Ore Dictionary
+.assignInput(String character, IIngredient item)
 ```
 Set the fluid input: (requires 0-1)
 ```groovy
@@ -45,7 +41,7 @@ mods.forestry.Carpenter.recipeBuilder()
             "GCG"
     )
     .assignInput('G', item('minecraft:gravel'))
-    .assignOreDictionaryInput('C', 'blockCoal')
+    .assignInput('C', ore('blockCoal'))
     .fluidInput(fluid('lava') * 2000)
     .setBoxItem(item('minecraft:emerald'))
     .output(item('minecraft:diamond') * 4)

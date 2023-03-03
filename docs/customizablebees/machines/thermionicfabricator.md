@@ -8,13 +8,9 @@ Set the recipe patter: (requires 1-3 strings each with a length of 1-3 character
 ```groovy
 .setRecipePattern(String...)
 ```
-Assign an ItemStack to a pattern character:
+Assign an Ingredient to a pattern character:
 ```groovy
-.assignInput(String character, ItemStack item)
-```
-Assign an Ore Dictionary to a pattern character:
-```groovy
-.assignOreDictionaryInput(String chararacter, String name) // must be the name of an Ore Dictionary
+.assignInput(String character, IIngredient item)
 ```
 Set the fluid input: (requires exactly 1)
 ```groovy
@@ -42,7 +38,7 @@ mods.forestry.ThermionicFabricator.recipeBuilder()
         )
         .assignInput('C', item('forestry:ingot_copper'))
         .assignInput('I', item('minecraft:iron_ingot'))
-        .assignOreDictionaryInput('#', 'cobblestone')
+        .assignInput('#', ore('cobblestone'))
         .output(item('minecraft:bedrock') * 5)
         .fluidInput(fluid('for.honey') * 50)
         .setCatalyst(item('minecraft:stone'))

@@ -4,6 +4,7 @@ import com.cleanroommc.groovyscript.api.GroovyBlacklist;
 import com.cleanroommc.groovyscript.api.GroovyLog;
 import com.cleanroommc.groovyscript.api.IIngredient;
 import com.cleanroommc.groovyscript.helper.SimpleObjectStream;
+import com.cleanroommc.groovyscript.helper.ingredient.OreDictIngredient;
 import com.cleanroommc.groovyscript.helper.recipe.IRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import forestry.api.recipes.ICarpenterRecipe;
@@ -121,28 +122,13 @@ public class Carpenter extends VirtualizedRegistry<ICarpenterRecipe> {
         return new SimpleObjectStream<>(RecipeManagers.carpenterManager.recipes()).setRemover(this::remove);
     }
 
-    public static class IngredientWrapper {
-        public final ItemStack stack;
-        public final String oreDict;
-
-        public IngredientWrapper(String oreDict) {
-            this.oreDict = oreDict;
-            this.stack = null;
-        }
-
-        public IngredientWrapper(ItemStack stack) {
-            this.stack = stack;
-            this.oreDict = null;
-        }
-    }
-
     public class RecipeBuilder implements IRecipeBuilder<ICarpenterRecipe> {
         private FluidStack fluid;
         private int time;
         private ItemStack box = ItemStack.EMPTY;
         private ItemStack output;
         private String[] pattern;
-        private Map<Character, IngredientWrapper> inputs;
+        private Map<Character, IIngredient> inputs;
 
         public RecipeBuilder setTime(int time) {
             this.time = Math.max(time, 0);
@@ -179,19 +165,11 @@ public class Carpenter extends VirtualizedRegistry<ICarpenterRecipe> {
             return this;
         }
 
-        public RecipeBuilder assignInput(String s, ItemStack input) {
+        public RecipeBuilder assignInput(String s, IIngredient input) {
             char c = s.charAt(0);
             if (c == ' ') return this;
             addInputMap();
-            this.inputs.put(c, new IngredientWrapper(input));
-            return this;
-        }
-
-        public RecipeBuilder assignOreDictionaryInput(String s, String oreDict) {
-            char c = s.charAt(0);
-            if (c == ' ') return this;
-            addInputMap();
-            this.inputs.put(c, new IngredientWrapper(oreDict));
+            this.inputs.put(c, input);
             return this;
         }
 
@@ -233,10 +211,10 @@ public class Carpenter extends VirtualizedRegistry<ICarpenterRecipe> {
         public @Nullable ICarpenterRecipe register() {
             if (!validate()) return null;
             List<Object> argList = new ArrayList<>(Arrays.asList(pattern));
-            for (Map.Entry<Character, IngredientWrapper> entry : inputs.entrySet()) {
+            for (Map.Entry<Character, IIngredient> entry : inputs.entrySet()) {
                 argList.add(entry.getKey());
-                if (entry.getValue().oreDict != null) argList.add(entry.getValue().oreDict);
-                else argList.add(entry.getValue().stack);
+                if (entry.getValue() instanceof OreDictIngredient) argList.add(((OreDictIngredient) entry.getValue()).getOreDict());
+                else argList.add(entry.getValue().getMatchingStacks()[0]);
             }
 
             CarpenterRecipe recipe = new CarpenterRecipe(time, fluid, box, ShapedRecipeCustom.createShapedRecipe(output, argList.toArray()));
