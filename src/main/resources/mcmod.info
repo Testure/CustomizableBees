@@ -2,7 +2,7 @@
 {
   "modid": "customizablebees",
   "name": "Customizable Bees",
-  "description": "Mod that allows other mods, CraftTweaker scripts, and GroovyScript scripts to easily add custom bees to forestry.",
+  "description": "Mod that allows other mods and GroovyScript scripts to easily add custom bees to forestry.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
