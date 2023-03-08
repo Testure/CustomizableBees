@@ -21,7 +21,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = CustomizableBees.MODID, dependencies = "required-after:forestry;" + "after:crafttweaker;" + "before:groovyscript;")
+@Mod(modid = CustomizableBees.MODID, dependencies = "required-after:forestry;" + "before:groovyscript;")
 public class CustomizableBees {
     public static final String MODID = "customizablebees";
     public static final Logger LOGGER = LogManager.getLogger(MODID);

@@ -97,7 +97,6 @@ dependencies {
     deobfCompile "mezz.jei:jei_1.12.2:${jei_version}"
     deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:${top_version}"
     deobfCompile "net.sengir.forestry:forestry_1.12.2:${forestry_version}"
-    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-${ct_version}"
     deobfCompile "curse.maven:mixin-booter-419286:${mixinbooter_version}"
     deobfCompile "curse.maven:groovyscript-687577:${groovyscript_version}"
 }
