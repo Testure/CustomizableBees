@@ -21,10 +21,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Squeezer extends VirtualizedRegistry<ISqueezerRecipe> {
-    public Squeezer() {
-        super();
-    }
-
     public RecipeBuilder recipeBuilder() {
         return new RecipeBuilder();
     }

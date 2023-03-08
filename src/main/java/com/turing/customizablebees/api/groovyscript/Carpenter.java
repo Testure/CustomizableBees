@@ -18,10 +18,6 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class Carpenter extends VirtualizedRegistry<ICarpenterRecipe> {
-    public Carpenter() {
-        super();
-    }
-
     public RecipeBuilder recipeBuilder() {
         return new RecipeBuilder();
     }

@@ -23,10 +23,6 @@ import java.util.*;
 public class ThermionicFabricator extends VirtualizedRegistry<IFabricatorRecipe> {
     public final Smelting smelting = new Smelting();
 
-    public ThermionicFabricator() {
-        super();
-    }
-
     public RecipeBuilder recipeBuilder() {
         return new RecipeBuilder();
     }
@@ -194,10 +190,6 @@ public class ThermionicFabricator extends VirtualizedRegistry<IFabricatorRecipe>
     }
 
     public static class Smelting extends VirtualizedRegistry<IFabricatorSmeltingRecipe> {
-        public Smelting() {
-            super();
-        }
-
         @Override
         @GroovyBlacklist
         public void onReload() {

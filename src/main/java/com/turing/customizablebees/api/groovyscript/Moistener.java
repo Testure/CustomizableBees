@@ -20,10 +20,6 @@ import java.util.Collection;
 public class Moistener extends VirtualizedRegistry<IMoistenerRecipe> {
     public final Fuel fuel = new Fuel();
 
-    public Moistener() {
-        super();
-    }
-
     public RecipeBuilder recipeBuilder() {
         return new RecipeBuilder();
     }

@@ -15,10 +15,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class Still extends VirtualizedRegistry<IStillRecipe> {
-    public Still() {
-        super();
-    }
-
     public RecipeBuilder recipeBuilder() {
         return new RecipeBuilder();
     }

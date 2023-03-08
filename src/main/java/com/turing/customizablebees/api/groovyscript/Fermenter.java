@@ -18,10 +18,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class Fermenter extends VirtualizedRegistry<IFermenterRecipe> {
-    public Fermenter() {
-        super();
-    }
-
     public RecipeBuilder recipeBuilder() {
         return new RecipeBuilder();
     }

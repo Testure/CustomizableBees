@@ -16,10 +16,6 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class Centrifuge extends VirtualizedRegistry<ICentrifugeRecipe> {
-    public Centrifuge() {
-        super();
-    }
-
     public RecipeBuilder recipeBuilder() {
         return new RecipeBuilder();
     }

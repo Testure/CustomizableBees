@@ -6,7 +6,6 @@ import com.turing.customizablebees.bees.CustomBees;
 import com.turing.customizablebees.items.CombItem;
 import com.turing.customizablebees.network.Messages;
 import com.turing.customizablebees.proxy.Proxy;
-import forestry.api.recipes.RecipeManagers;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -55,12 +54,7 @@ public class CustomizableBees {
 
     @SubscribeEvent
     public void recipes(RegistryEvent.Register<IRecipe> event) {
-        MinecraftForge.EVENT_BUS.post(new BeeCombEvent.DefineRecipes());
         MinecraftForge.EVENT_BUS.post(new BeeCombEvent.RegisterRecipes());
-        APIHelper.COMBS.forEach(comb -> {
-            comb.recipes.forEach((type, products) -> RecipeManagers.centrifugeManager.addRecipe(20, comb.getStackFromType(type), products));
-            comb.recipes.clear();
-        });
     }
 
     @Mod.EventHandler

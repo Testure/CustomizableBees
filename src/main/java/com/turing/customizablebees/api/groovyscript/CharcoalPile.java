@@ -16,10 +16,6 @@ import net.minecraft.item.ItemStack;
 public class CharcoalPile extends VirtualizedRegistry<ICharcoalPileWall> {
     protected static ICharcoalManager manager;
 
-    public CharcoalPile() {
-        super();
-    }
-
     @Override
     @GroovyBlacklist
     public void onReload() {

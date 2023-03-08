@@ -2,7 +2,6 @@ package com.turing.customizablebees.items;
 
 import com.google.common.collect.ImmutableList;
 import com.turing.customizablebees.api.ICombType;
-import forestry.api.recipes.RecipeManagers;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
@@ -24,7 +23,6 @@ public class CombItem extends BaseItem {
     public static final Map<CombItem, List<ICombType>> ALL_COMB_TYPES = new HashMap<>();
 
     private final List<ICombType> types = new ArrayList<>();
-    public final Map<ICombType, Map<ItemStack, Float>> recipes = new HashMap<>();
 
     public CombItem(String modid, @Nullable CreativeTabs tab) {
         super(modid, "bee_comb", tab);
@@ -65,12 +63,6 @@ public class CombItem extends BaseItem {
         ICombType type = get(i);
         if (type != null) return tintIndex == 0 ? type.getPrimaryColor() : type.getSecondaryColor();
         else return -1;
-    }
-
-    public void addRecipe(ICombType type, Map<ItemStack, Float> products) {
-        if (this.types.contains(type)) {
-            recipes.put(type, products);
-        }
     }
 
     @SideOnly(Side.CLIENT)
