@@ -1,5 +1,6 @@
 package com.turing.customizablebees.api;
 
+import com.cleanroommc.groovyscript.GroovyScript;
 import com.turing.customizablebees.bees.BeeMutationTree;
 import com.turing.customizablebees.bees.CustomBeeEntry;
 import com.turing.customizablebees.bees.CustomBeeModel;
@@ -115,7 +116,7 @@ public class BeeBuilder {
         if (this.isNocturnal) bee = bee.setNocturnal();
         if (this.toleratesRain) bee = bee.setTemplateAlleleBool(EnumBeeChromosome.TOLERATES_RAIN, true);
         if (this.jubilanceProvider != null) bee = bee.setJubilanceProvider(jubilanceProvider);
-        if (!this.customModel.isEmpty()) bee = bee.setCustomBeeModelProvider(new CustomBeeModel(!this.modid.equalsIgnoreCase("groovyscript") ? this.modid : "contenttweaker", this.customModel));
+        if (!this.customModel.isEmpty()) bee = bee.setCustomBeeModelProvider(new CustomBeeModel(!this.modid.equalsIgnoreCase("groovyscript") ? this.modid : GroovyScript.getRunConfig().getPackId(), this.customModel));
         if (!this.effect.isEmpty()) bee = bee.setTemplateEffect(() -> CustomBees.getEffects().get(this.effect));
         return bee;
     }
