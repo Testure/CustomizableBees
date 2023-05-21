@@ -2,7 +2,6 @@ package com.turing.customizablebees.bees;
 
 import com.cleanroommc.groovyscript.GroovyScript;
 import com.turing.customizablebees.bees.effects.EffectBase;
-import com.turing.customizablebees.mixin.AlleleBeeSpeciesAccessor;
 import forestry.api.apiculture.*;
 import forestry.api.core.EnumHumidity;
 import forestry.api.core.EnumTemperature;
@@ -10,7 +9,6 @@ import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAllele;
 import forestry.api.genetics.IAlleleSpeciesBuilder;
 import forestry.api.genetics.IClassification;
-import forestry.apiculture.genetics.alleles.AlleleBeeSpecies;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
