@@ -6,7 +6,7 @@ public class GroovyscriptHelper {
     public static ModSupport.Container<CustomizableBees> CUSTOMIZABLE_BEES;
 
     public static void construction() {
-        CUSTOMIZABLE_BEES = new ModSupport.Container<>("customizablebees", "Customizable Bees", CustomizableBees::new, "custombees", "forestrytweaker", "forestry");
+        CUSTOMIZABLE_BEES = new ModSupport.Container<>("customizablebees", "Customizable Bees", CustomizableBees::new, "custombees");
     }
 
     public static void init() {

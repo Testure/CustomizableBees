@@ -1,5 +1,6 @@
 package com.turing.customizablebees.bees;
 
+import com.cleanroommc.groovyscript.GroovyScript;
 import com.turing.customizablebees.bees.effects.EffectBase;
 import com.turing.customizablebees.mixin.AlleleBeeSpeciesAccessor;
 import forestry.api.apiculture.*;
@@ -250,6 +251,7 @@ public class CustomBeeEntry implements Supplier<IAlleleBeeSpecies>, BeeMutationT
         }
 
         public static CustomBeeFactory factory(String modid, String name, boolean dominant, String branchName, int primaryColor, int secondaryColor, String authority) {
+            if (modid.equalsIgnoreCase("groovyscript")) modid = GroovyScript.getRunConfig().getPackId();
             branchName = new ResourceLocation(modid, new ResourceLocation(branchName).getPath()).toString();
             IClassification branch = CustomBees.classificationHashMap.computeIfAbsent(branchName, s -> {
                 ResourceLocation location = new ResourceLocation(s);
